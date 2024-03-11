@@ -159,3 +159,18 @@ function elaborate(x: number, func: () => void) {}
 elaborate(10, () => {
   console.log('report');
 });
+
+
+//* for the compiler of ts, we can use tsc app.ts --watch (or -w)
+//? it automatically compiles a .js file from our .ts one
+console.log('watching...')
+
+//* tsc --init: compiles the whole ts project, creating a tsconfig.json
+//? we can use -w after this, so that we can look for any change in the project
+//* because it'll be very likely that we'll have multiple .ts files
+
+//* in the tsconfig, I can also exclude or include some files to not compile them
+//? node_modules directory is excluded by default, but if we exclude something else we need to specify it again
+
+//* target allows to compile in a specified ES version; if it's an older one, the code be adapted
+//? (for example, ES5 doesn't have const and let, if we use it all variables will be turned into var)
