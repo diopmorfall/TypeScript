@@ -122,3 +122,40 @@ const opCharacter = {
 if (opCharacter.category == Category.CELESTIAL_DRAGON) {
   console.log('You trash');
 }
+
+
+function add(a: number, b = 3): number { //* in this case it's not compulsory
+  //* but adding the type of the return will help us keeping things in check
+  return a + b;
+}
+
+//? if the function returns any, we can return any type of value
+
+function multiply(a: number, b: number): number {
+  return a * b;
+}
+
+add(4); //? adding to the default value
+add(3, 4);
+//! add('4') won't work, because of the inference (it also guesses the type of return)
+
+function noReturn(): void {  //? it's the same for void
+  console.log('nothing');
+}
+noReturn();
+
+//* technically it works, but it's wrong because we could assign any function to it
+let value: (x: number, y: number) => number;
+//* but we only accept functions that have two numeric parameters that return a number
+//value = add;
+value = multiply;
+//! value = noReturn this won't work anymore
+
+console.log(value(7, 7));
+
+function elaborate(x: number, func: () => void) {}
+//* I can also use functions as parameters (like callbacks)
+
+elaborate(10, () => {
+  console.log('report');
+});
