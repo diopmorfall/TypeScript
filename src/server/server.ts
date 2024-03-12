@@ -3,3 +3,8 @@ function server(): void{
 }
 
 server()
+
+export function power(x: number): number{
+    return x * x
+}
+ //? I can export functions, classes, interfaces, you name it

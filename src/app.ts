@@ -498,3 +498,8 @@ class Content {
     console.log('Creating HTML element');
   }
 }
+
+ //? I can import functions, classes, interfaces, you name it
+ //* if it doesn't work, check that "module" in tsconfig.json is es6
+import { power } from "./server/server.js";
+console.log("POWER", power(4))
