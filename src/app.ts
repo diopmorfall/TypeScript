@@ -269,3 +269,145 @@ class Referee {
 //! I don't have to create an instance anymore, instead I do this
 
 Referee.getInstance().greet();
+
+
+interface Prova {
+  name: string;
+  saluta(): void; // methods here are all abstract, we define them in the classes
+}
+
+//* technically they're both very similar, but interfaces are used to give classes more features; custom types is used to create non-basic data types
+//? also, we can't use private/public/protected here
+type Prova2 = {
+  name: string;
+  saluta(): void;
+};
+
+interface Y {
+  scrivi(): void;
+}
+
+class X implements Prova, Y {
+  name: string;
+  //! I can't initialize properties like usual
+  constructor(name: string) {
+    this.name = name;
+  }
+
+  saluta(): void {
+    console.log('Hi');
+  }
+
+  scrivi(): void {
+    console.log('Implementation');
+  }
+}
+
+interface Internet {
+  ipAddress: string;
+  connectToInternet(): void;
+}
+
+abstract class Device {
+  constructor(protected name: string, protected anno: number) {}
+
+  abstract turnOn(): void;
+  abstract turnOff(): void;
+}
+
+class Phone extends Device {
+  turnOn(): void {
+    console.log('phone turning on...');
+  }
+  turnOff(): void {
+    console.log('phone turning off...');
+  }
+}
+
+class Smartphone extends Device implements Internet {
+  ipAddress: string;
+  //* every property of an interface must be declared
+
+  constructor(name: string, year: number, ipAddress: string) {
+    super(name, year);
+    this.ipAddress = ipAddress;
+  }
+
+  turnOn(): void {
+    console.log('smartphone turning on...');
+  }
+  turnOff(): void {
+    console.log('smartphone turning off...');
+  }
+
+  //* let's not forget methods too
+  connectToInternet(): void {
+    console.log('connecting to internet...');
+  }
+}
+
+class Computer extends Device implements Internet {
+  ipAddress: string;
+
+  constructor(name: string, year: number, ipAddress: string) {
+    super(name, year);
+    this.ipAddress = ipAddress;
+  }
+
+  turnOn(): void {
+    console.log('computer turning on...');
+  }
+  turnOff(): void {
+    console.log('computer turning off...');
+  }
+
+  connectToInternet(): void {
+    console.log('connecting to internet...');
+  }
+}
+
+interface A {
+  name: string;
+}
+
+interface B extends A {
+  //* interfaces can extend one another
+  surname: string;
+  breathe(): void;
+}
+
+interface C {
+  address: string;
+  greet(): void;
+}
+
+interface D extends B, C {
+  //* and even multiple interfaces
+  jump(): void;
+}
+
+class EFG implements D {
+  //* and we can implement them all
+  name: string;
+  surname: string;
+  address: string;
+
+  constructor(name: string, surname: string, address: string) {
+    this.name = name;
+    this.surname = surname;
+    this.address = address;
+  }
+
+  breathe(): void {
+    console.log('Breathing');
+  }
+
+  greet(): void {
+    console.log('greeting');
+  }
+
+  jump(): void {
+    console.log('jump');
+  }
+}
+
