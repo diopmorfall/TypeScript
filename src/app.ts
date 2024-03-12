@@ -173,4 +173,99 @@ console.log('watching...')
 //? node_modules directory is excluded by default, but if we exclude something else we need to specify it again
 
 //* target allows to compile in a specified ES version; if it's an older one, the code be adapted
-//? (for example, ES5 doesn't have const and let, if we use it all variables will be turned into var)
+//? (for example, ES5 doesn't have const and let, if we use it all variables will be turned into var)ù
+
+
+abstract class Player {
+  //* in angular constructors are defined this way
+  //? automatically assigning the value of the parameter that we're passing
+  constructor(
+    private name: string,
+    private surname: string,
+    protected team: string
+  ) {
+    this.name = name;
+    this.surname = surname;
+    this.team = team;
+  }
+
+  introduction(): void {
+    console.log(`Hey there! I'm ${this.name} ${this.surname}`);
+  }
+
+  challenge(player: Player): void {
+    console.log(`I'm going to beat you ${player.surname} ${player.name}`);
+  }
+
+  abstract checkContract(): void;
+  //* abstracts methods are declared here, but must be implemented by children classes
+}
+
+//let player1: Player = new Player('Ryusei', 'Shidou', 'PXG');
+//* If we need to declare a variable that we'll initialize later, we coud give it a specific type
+//let player2: Player = new Player('Meguru', 'Bachira', 'FC Barcha');
+
+//player1.introduction();
+//player2.challenge(player1);
+
+//! An abstract class can't have objects of its own, but it's used as a "model" for other classes that extend it
+
+class Striker extends Player {
+  goalScored: number = 5;
+
+  constructor(name: string, surname: string, team: string, goalScored: number) {
+    super(name, surname, team);
+  }
+
+  static getReport(){ //* a method that is available if we call the class, not the instance
+    console.log("Loading player data...")
+  }
+
+  changeTeam() {
+    //* protected properties can be changed inside the classes and by the ones that extend the first class
+    this.team = 'Japan U20';
+  }
+
+  checkContract(): void {
+    console.log('Implemented');
+  }
+}
+
+const striker1: Striker = new Striker('Rin', 'Itoshi', 'PXG', 5);
+striker1.introduction();
+
+//Player.introduction() //* static methods can be called this way
+
+//! const striker2: Striker = new Player('Ryusei', 'Shidou', 'PXG', 4);
+// an abstract class can't have instances on its own
+
+const striker2: Striker = new Striker('Ryusei', 'Shidou', 'PXG', 4);
+striker2.challenge(striker1);
+
+Striker.getReport() //* calling a static method. It's like callink Math.floor() or the others
+
+class Referee {
+  private static instance: Referee; //* here's our instance
+  private constructor(private name: string, private surname: string) {
+    //* if a class has a private constructor, we're creating a singleton
+    //* a class where it can have only one instance of itself
+  }
+
+  //* this method helps us to check if the instance exists or not
+  static getInstance() {
+    if (Referee.instance) {
+      return this.instance;
+    }
+    this.instance = new Referee('Pierluigi', 'Collina');
+    return this.instance;
+  }
+
+  greet() {
+    console.log(`I'm the referee for this match, ${this.name} ${this.surname}`);
+  }
+}
+
+//const referee: Referee = new Referee('Pierluigi', 'Collina')
+//! I don't have to create an instance anymore, instead I do this
+
+Referee.getInstance().greet();
