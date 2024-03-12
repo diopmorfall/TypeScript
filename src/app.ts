@@ -411,3 +411,39 @@ class EFG implements D {
   }
 }
 
+const arr1: number[] = [1, 2, 3]; //? usually we declare variables this way
+const arr2: Array<number> = [4, 5, 6]; //? but there's also this way
+//* this is a generic <here goes the type>
+
+function createArray<T extends boolean | string>(items: T[]): T[] {
+  //* here we make sure that we keep the specified type that we pass
+  //* we can also extend a type, an object or an union
+  return new Array().concat(items);
+}
+const arr3 = createArray<boolean>([true, false, true, true, false]);
+const arr4 = createArray<string>(['wvc', 'rgr', 'orp']);
+//* this might be a way to create any array, but it's better to do it with generics 2- that's why we specify the type
+
+//arr3.push(4) //! because I could push anything, arrays accept everything 2- and now we can't do this anymore, we can insert only coherent data
+arr4.push('nji');
+
+class Luggage<T> { //* here we create a class with a generic type
+  private items: T[] = [];
+
+  addItem(item: T) {
+    this.items.push(item);
+  }
+
+  removeItem(item: T) {
+    this.items.splice(this.items.indexOf(item, 1));
+  }
+}
+
+//* this way we can use the needed type and we make sure we respect it
+const bag = new Luggage<string>();
+bag.addItem('woo');
+bag.addItem('hoo');
+
+const suitcase = new Luggage<number>();
+suitcase.addItem(45);
+suitcase.addItem(54);
