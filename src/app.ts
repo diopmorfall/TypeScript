@@ -447,3 +447,54 @@ bag.addItem('hoo');
 const suitcase = new Luggage<number>();
 suitcase.addItem(45);
 suitcase.addItem(54);
+
+
+//* Decorators: functions that are linked to classes and run with it
+//todo: to not get the error, uncomment "experimental decorators" in tsconfig.json, and set it true
+
+function Printer(text: string) {
+  //console.log('Printing...')
+  //console.log(constructor)
+  //* the decorator function returns the function that really runs
+  return function (constructor: any) {
+    console.log(text);
+    console.log(constructor);
+  };
+}
+
+//* I can also pass parameters to the decorators
+@Printer('printing wororo')
+class Prova {
+  constructor() {
+    console.log('Creating the object prova');
+  }
+}
+
+@Printer('building bomb')
+class Bomb {
+  constructor() {
+    console.log('Creating the bomb object');
+  }
+}
+
+const p = new Prova();
+const b = new Bomb();
+
+//* this is a factory decorator function
+function createHTMLElement(element: string, id: string, nome: string) {
+  return function (constructor: any) {
+    const container = document.getElementById(id);
+    const content = new constructor(nome);
+    if (container) {
+      container.innerHTML = element;
+      container.querySelector('h3')!.textContent = content.nome;
+    }
+  };
+}
+
+@createHTMLElement('<h3></h3>', 'app', 'Decorator')
+class Content {
+  constructor(public nome: string) {
+    console.log('Creating HTML element');
+  }
+}
